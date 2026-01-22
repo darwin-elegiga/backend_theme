@@ -1,0 +1,152 @@
+{
+  "mapfre": {
+    "customerName": "mapfre",
+    "colors": {
+      "primary": "#D81E05",
+      "primaryDisabled": "#d81e059d",
+      "secondary": "#1A1A1A",
+      "link": "#D81E05",
+      "background": "#FFFFFF",
+      "backgroundSecondary": "#F5F5F5",
+      "headerBackground": "#D81E05",
+      "navBar": "#D81E05",
+      "navBarSecondary": "#B30000",
+      "text": "#1A1A1A",
+      "textSecondary": "#666666",
+      "border": "#E0E0E0",
+      "overlay": "rgba(0, 0, 0, 0.4)",
+      "error": "#D32F2F",
+      "errorBackground": "#FFEBEE",
+      "errorText": "#D32F2F",
+      "success": "#2E7D32",
+      "warning": "#F57C00",
+      "buttonNext": "#D81E05",
+      "buttonNextText": "#FFFFFF",
+      "buttonBack": "transparent",
+      "buttonBackText": "#D81E05"
+    },
+    "fonts": {
+      "primary": {
+        "name": "Mapfre Sans",
+        "variants": [
+          { "file": "MapfreSans-Light.woff2", "weight": 300, "style": "normal" },
+          { "file": "MapfreSans-Regular.woff2", "weight": 400, "style": "normal" },
+          { "file": "MapfreSans-Bold.woff2", "weight": 700, "style": "normal" }
+        ]
+      },
+      "secondary": {
+        "name": "Mapfre Text",
+        "variants": [
+          { "file": "MapfreText-Regular.woff2", "weight": 400, "style": "normal" },
+          { "file": "MapfreText-Italic.woff2", "weight": 400, "style": "italic" },
+          { "file": "MapfreText-Bold.woff2", "weight": 700, "style": "normal" }
+        ]
+      },
+      "fallback": "Arial, sans-serif"
+    },
+    "logos": {
+      "header": "logo.svg",
+      "favicon": "favicon.ico"
+    },
+    "placeholders": {
+      "car": {
+        "front": "car/front.webp",
+        "frontRight": "car/front-right.webp",
+        "rearRight": "car/rear-right.webp",
+        "rear": "car/rear.webp",
+        "rearLeft": "car/rear-left.webp",
+        "frontLeft": "car/front-left.webp"
+      },
+      "moto": {
+        "front": "moto/front.webp",
+        "right": "moto/right.webp",
+        "rear": "moto/rear.webp",
+        "left": "moto/left.webp"
+      },
+      "odometer": {
+        "mileage": "odometer/mileage.webp"
+      },
+      "documentation": {
+        "dniFront": "documentation/dni-front.webp",
+        "dniBack": "documentation/dni-back.webp",
+        "licenseFront": "documentation/license-front.webp",
+        "licenseBack": "documentation/license-back.webp",
+        "dataSheetFront": "documentation/data-sheet-front.webp",
+        "dataSheetBack": "documentation/data-sheet-back.webp",
+        "circulationPermit": "documentation/circulation-permit.webp"
+      }
+    }
+  },
+  "santander": {
+    "customerName": "santander",
+    "colors": {
+      "primary": "#EC0000",
+      "primaryDisabled": "#ec00009d",
+      "secondary": "#1A1A1A",
+      "link": "#0066CC",
+      "background": "#FFFFFF",
+      "backgroundSecondary": "#F5F5F5",
+      "headerBackground": "#EC0000",
+      "navBar": "#EC0000",
+      "navBarSecondary": "#B30000",
+      "text": "#1A1A1A",
+      "textSecondary": "#666666",
+      "border": "#E0E0E0",
+      "overlay": "rgba(0, 0, 0, 0.4)",
+      "error": "#D32F2F",
+      "errorBackground": "#FFEBEE",
+      "errorText": "#D32F2F",
+      "success": "#2E7D32",
+      "warning": "#F57C00",
+      "buttonNext": "#EC0000",
+      "buttonNextText": "#FFFFFF",
+      "buttonBack": "transparent",
+      "buttonBackText": "#EC0000"
+    },
+    "fonts": {
+      "primary": {
+        "name": "Roboto",
+        "variants": [
+          { "file": "Roboto-Light.woff2", "weight": 300, "style": "normal" },
+          { "file": "Roboto-Regular.woff2", "weight": 400, "style": "normal" },
+          { "file": "Roboto-Medium.woff2", "weight": 500, "style": "normal" },
+          { "file": "Roboto-Bold.woff2", "weight": 700, "style": "normal" },
+          { "file": "Roboto-Italic.woff2", "weight": 400, "style": "italic" }
+        ]
+      },
+      "fallback": "Arial, sans-serif"
+    },
+    "logos": {
+      "header": "logo.svg",
+      "favicon": "favicon.ico"
+    },
+    "placeholders": {
+      "car": {
+        "front": "car/front.webp",
+        "frontRight": "car/front-right.webp",
+        "rearRight": "car/rear-right.webp",
+        "rear": "car/rear.webp",
+        "rearLeft": "car/rear-left.webp",
+        "frontLeft": "car/front-left.webp"
+      },
+      "moto": {
+        "front": "moto/front.webp",
+        "right": "moto/right.webp",
+        "rear": "moto/rear.webp",
+        "left": "moto/left.webp"
+      },
+      "odometer": {
+        "mileage": "odometer/mileage.webp"
+      },
+      "documentation": {
+        "dniFront": "documentation/dni-front.webp",
+        "dniBack": "documentation/dni-back.webp",
+        "licenseFront": "documentation/license-front.webp",
+        "licenseBack": "documentation/license-back.webp",
+        "dataSheetFront": "documentation/data-sheet-front.webp",
+        "dataSheetBack": "documentation/data-sheet-back.webp",
+        "circulationPermit": "documentation/circulation-permit.webp"
+      }
+    }
+  }
+}

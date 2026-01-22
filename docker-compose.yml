@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  theme-api:
+    build:
+      context: .
+      dockerfile: dockerfile
+    container_name: theme-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      # Volumen para archivos estáticos (imágenes, fuentes)
+      - ./static:/app/static
+      # Volumen para desarrollo (hot reload del código)
+      - ./app:/app/app
+    environment:
+      # URL base para assets estáticos
+      # Cambiar a CDN en producción: https://cdn.example.com
+      - STATIC_BASE_URL=http://localhost:8000/static
+      # CORS - orígenes permitidos (separados por coma)
+      - CORS_ORIGINS=http://localhost:3000,http://localhost:5173,*
+      # Cache
+      - ENABLE_CACHE=true
+      - CACHE_TTL=3600
+      # Python
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # Servicio opcional para desarrollo con hot reload
+  theme-api-dev:
+    build:
+      context: .
+      dockerfile: dockerfile
+    container_name: theme-backend-dev
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./static:/app/static
+      - ./app:/app/app
+    environment:
+      - STATIC_BASE_URL=http://localhost:8001/static
+      - CORS_ORIGINS=*
+      - ENABLE_CACHE=false
+      - PYTHONUNBUFFERED=1
+    command: ["python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+    profiles:
+      - dev
