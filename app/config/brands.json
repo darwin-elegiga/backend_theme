@@ -69,22 +69,14 @@
         "mileage": "odometer/odometer-illustration.png"
       },
       "documentation": {
-        "dniIllustrationFront": "documentation/dni-illustration-anverso.png",
-        "dniIllustrationBack": "documentation/dni-illustration-reverso.png",
-        "dniPhotoFront": "documentation/dni-photography-anverso.png",
-        "dniPhotoBack": "documentation/dni-photography-reverso.png",
-        "licenseIllustrationFront": "documentation/license-illustration-anverso.png",
-        "licenseIllustrationBack": "documentation/license-illustration-reverso.png",
-        "licensePhotoFront": "documentation/license-photography-anverso.png",
-        "licensePhotoBack": "documentation/license-photography-reverso.png",
-        "dataSheetIllustrationFront": "documentation/datasheet-illustration-anverso.png",
-        "dataSheetIllustrationBack": "documentation/datasheet-illustration-reverso.png",
-        "dataSheetPhotoFront": "documentation/datasheet-photography-anverso.png",
-        "dataSheetPhotoBack": "documentation/datasheet-photography-reverso.png",
-        "circulationIllustrationFront": "documentation/circulation-illustration-anverso.png",
-        "circulationIllustrationBack": "documentation/circulation-illustration-reverso.png",
-        "circulationPhotoFront": "documentation/circulation-photography-anverso.png",
-        "circulationPhotoBack": "documentation/circulation-photography-reverso.png"
+        "dniFront": "documentation/dni-illustration-anverso.png",
+        "dniBack": "documentation/dni-illustration-reverso.png",
+        "licenseFront": "documentation/license-illustration-anverso.png",
+        "licenseBack": "documentation/license-illustration-reverso.png",
+        "dataSheetFront": "documentation/datasheet-illustration-anverso.png",
+        "dataSheetBack": "documentation/datasheet-illustration-reverso.png",
+        "circulationFront": "documentation/circulation-illustration-anverso.png",
+        "circulationBack": "documentation/circulation-illustration-reverso.png"
       }
     }
   },
@@ -152,22 +144,14 @@
         "mileage": "odometer/odometer-illustration.png"
       },
       "documentation": {
-        "dniIllustrationFront": "documentation/dni-illustration-anverso.png",
-        "dniIllustrationBack": "documentation/dni-illustration-reverso.png",
-        "dniPhotoFront": "documentation/dni-photography-anverso.png",
-        "dniPhotoBack": "documentation/dni-photography-reverso.png",
-        "licenseIllustrationFront": "documentation/license-illustration-anverso.png",
-        "licenseIllustrationBack": "documentation/license-illustration-reverso.png",
-        "licensePhotoFront": "documentation/license-photography-anverso.png",
-        "licensePhotoBack": "documentation/license-photography-reverso.png",
-        "dataSheetIllustrationFront": "documentation/datasheet-illustration-anverso.png",
-        "dataSheetIllustrationBack": "documentation/datasheet-illustration-reverso.png",
-        "dataSheetPhotoFront": "documentation/datasheet-photography-anverso.png",
-        "dataSheetPhotoBack": "documentation/datasheet-photography-reverso.png",
-        "circulationIllustrationFront": "documentation/circulation-illustration-anverso.png",
-        "circulationIllustrationBack": "documentation/circulation-illustration-reverso.png",
-        "circulationPhotoFront": "documentation/circulation-photography-anverso.png",
-        "circulationPhotoBack": "documentation/circulation-photography-reverso.png"
+        "dniFront": "documentation/dni-illustration-anverso.png",
+        "dniBack": "documentation/dni-illustration-reverso.png",
+        "licenseFront": "documentation/license-illustration-anverso.png",
+        "licenseBack": "documentation/license-illustration-reverso.png",
+        "dataSheetFront": "documentation/datasheet-illustration-anverso.png",
+        "dataSheetBack": "documentation/datasheet-illustration-reverso.png",
+        "circulationFront": "documentation/circulation-illustration-anverso.png",
+        "circulationBack": "documentation/circulation-illustration-reverso.png"
       }
     }
   }

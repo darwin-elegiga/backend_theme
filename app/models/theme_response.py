@@ -61,19 +61,49 @@ class Logos(BaseModel):
     favicon: str
 
 
-# Placeholders dinámicos - permite cualquier estructura
-CarPlaceholders = Dict[str, str]
-MotoPlaceholders = Dict[str, str]
-OdometerPlaceholders = Dict[str, str]
-DocumentationPlaceholders = Dict[str, str]
+class CarPlaceholders(BaseModel):
+    """Placeholders de vehículo (coche) - 8 ángulos."""
+    front: str
+    frontRight: str
+    right: str
+    rearRight: str
+    rear: str
+    rearLeft: str
+    left: str
+    frontLeft: str
+
+
+class MotoPlaceholders(BaseModel):
+    """Placeholders de moto - 4 ángulos."""
+    front: str
+    right: str
+    rear: str
+    left: str
+
+
+class OdometerPlaceholders(BaseModel):
+    """Placeholders de odómetro."""
+    mileage: str
+
+
+class DocumentationPlaceholders(BaseModel):
+    """Placeholders de documentación."""
+    dniFront: str
+    dniBack: str
+    licenseFront: str
+    licenseBack: str
+    dataSheetFront: str
+    dataSheetBack: str
+    circulationFront: str
+    circulationBack: str
 
 
 class Placeholders(BaseModel):
     """Todos los placeholders organizados por categoría."""
-    car: Dict[str, str]
-    moto: Dict[str, str]
-    odometer: Dict[str, str]
-    documentation: Dict[str, str]
+    car: CarPlaceholders
+    moto: MotoPlaceholders
+    odometer: OdometerPlaceholders
+    documentation: DocumentationPlaceholders
 
 
 class ThemeData(BaseModel):

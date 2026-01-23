@@ -14,6 +14,10 @@ from app.models.theme_response import (
     FontVariant,
     Logos,
     Placeholders,
+    CarPlaceholders,
+    MotoPlaceholders,
+    OdometerPlaceholders,
+    DocumentationPlaceholders,
     ErrorResponse
 )
 from app.services.brand_service import (
@@ -132,10 +136,10 @@ async def get_theme(url_code: str) -> ThemeResponse:
         ),
         logos=Logos(**logos_urls),
         placeholders=Placeholders(
-            car=placeholders_urls["car"],
-            moto=placeholders_urls["moto"],
-            odometer=placeholders_urls["odometer"],
-            documentation=placeholders_urls["documentation"]
+            car=CarPlaceholders(**placeholders_urls["car"]),
+            moto=MotoPlaceholders(**placeholders_urls["moto"]),
+            odometer=OdometerPlaceholders(**placeholders_urls["odometer"]),
+            documentation=DocumentationPlaceholders(**placeholders_urls["documentation"])
         )
     )
 
