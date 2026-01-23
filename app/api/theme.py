@@ -17,54 +17,82 @@ from app.models.theme_response import (
     ErrorResponse
 )
 from app.services.brand_service import (
-    BrandService,
     BrandNotFoundError,
     get_brand_service
 )
-from app.services.font_service import FontService, get_font_service
+from app.services.font_service import get_font_service
+from app.services.code_service import get_code_service
 
 
 router = APIRouter(prefix="/api", tags=["theme"])
 
 
-@router.get(
-    "/theme/{brand_id}",
-    response_model=ThemeResponse,
-    responses={
-        404: {"model": ErrorResponse, "description": "Brand not found"}
-    },
-    summary="Obtiene el tema completo de un brand",
-    description="""
-    Retorna la configuración completa del tema para un brand específico,
-    incluyendo colores, fuentes, logos y placeholders con URLs públicas
-    listas para consumir.
+def resolve_to_brand_id(code_or_brand: str) -> str:
     """
-)
-async def get_theme(brand_id: str) -> ThemeResponse:
-    """
-    Obtiene el tema completo de un brand.
+    Resuelve un código URL o brand_id a un brand_id válido.
+
+    Primero intenta resolver como código URL.
+    Si no existe, lo trata como brand_id directo.
 
     Args:
-        brand_id: Identificador único del brand (ej: mapfre, santander)
+        code_or_brand: Código URL o brand_id
+
+    Returns:
+        brand_id resuelto
+
+    Raises:
+        BrandNotFoundError: Si no existe ni como código ni como brand
+    """
+    code_service = get_code_service()
+    brand_service = get_brand_service()
+
+    # Primero intentar como código URL
+    if code_service.code_exists(code_or_brand):
+        return code_service.get_brand_id_by_code(code_or_brand)
+
+    # Si no es código, verificar si es un brand_id válido
+    if brand_service.brand_exists(code_or_brand):
+        return code_or_brand.lower()
+
+    # No existe ni como código ni como brand
+    raise BrandNotFoundError(f"'{code_or_brand}' not found as code or brand")
+
+
+@router.get(
+    "/theme/{url_code}",
+    response_model=ThemeResponse,
+    responses={
+        404: {"model": ErrorResponse, "description": "Code/Brand not found"}
+    },
+    summary="Obtiene el tema completo",
+    description="""
+    Retorna la configuración completa del tema.
+    Acepta un código URL (ej: b911a374a2cb41) o un brand_id directo (ej: mapfre).
+    """
+)
+async def get_theme(url_code: str) -> ThemeResponse:
+    """
+    Obtiene el tema completo.
+
+    Args:
+        url_code: Código URL o brand_id
 
     Returns:
         ThemeResponse con toda la configuración del tema
-
-    Raises:
-        HTTPException 404: Si el brand no existe
     """
     brand_service = get_brand_service()
-    font_service = get_font_service()
 
+    # Resolver código/brand a brand_id
     try:
+        brand_id = resolve_to_brand_id(url_code)
         config = brand_service.get_brand_config(brand_id)
     except BrandNotFoundError:
         raise HTTPException(
             status_code=404,
             detail={
                 "success": False,
-                "error": "Brand not found",
-                "detail": f"The brand '{brand_id}' does not exist. "
+                "error": "Not found",
+                "detail": f"'{url_code}' is not a valid code or brand. "
                          f"Available brands: {', '.join(brand_service.get_brand_ids())}"
             }
         )
@@ -115,16 +143,16 @@ async def get_theme(brand_id: str) -> ThemeResponse:
 
 
 @router.get(
-    "/theme/{brand_id}/colors",
-    summary="Obtiene solo los colores de un brand",
+    "/theme/{url_code}/colors",
+    summary="Obtiene solo los colores",
     description="Retorna únicamente la paleta de colores del tema."
 )
-async def get_theme_colors(brand_id: str) -> dict:
+async def get_theme_colors(url_code: str) -> dict:
     """
-    Obtiene solo los colores de un brand.
+    Obtiene solo los colores.
 
     Args:
-        brand_id: Identificador único del brand (ej: mapfre, santander)
+        url_code: Código URL o brand_id
 
     Returns:
         Diccionario con los colores del tema
@@ -132,14 +160,15 @@ async def get_theme_colors(brand_id: str) -> dict:
     brand_service = get_brand_service()
 
     try:
+        brand_id = resolve_to_brand_id(url_code)
         config = brand_service.get_brand_config(brand_id)
     except BrandNotFoundError:
         raise HTTPException(
             status_code=404,
             detail={
                 "success": False,
-                "error": "Brand not found",
-                "detail": f"The brand '{brand_id}' does not exist. "
+                "error": "Not found",
+                "detail": f"'{url_code}' is not a valid code or brand. "
                          f"Available brands: {', '.join(brand_service.get_brand_ids())}"
             }
         )
@@ -152,40 +181,34 @@ async def get_theme_colors(brand_id: str) -> dict:
 
 
 @router.get(
-    "/fonts/{brand_id}/fonts.css",
+    "/fonts/{url_code}/fonts.css",
     response_class=Response,
     summary="CSS de fuentes generado dinámicamente",
-    description="""
-    Genera dinámicamente el archivo CSS con las reglas @font-face
-    para todas las fuentes del brand especificado.
-    """
+    description="Genera el CSS con las reglas @font-face para las fuentes del brand."
 )
-async def get_fonts_css(brand_id: str) -> Response:
+async def get_fonts_css(url_code: str) -> Response:
     """
-    Genera el CSS de fuentes para un brand.
+    Genera el CSS de fuentes.
 
     Args:
-        brand_id: Identificador único del brand
+        url_code: Código URL o brand_id
 
     Returns:
         Response con el CSS de fuentes
-
-    Raises:
-        HTTPException 404: Si el brand no existe
     """
     brand_service = get_brand_service()
     font_service = get_font_service()
 
     try:
+        brand_id = resolve_to_brand_id(url_code)
         css_content = font_service.generate_fonts_css(brand_id)
     except BrandNotFoundError:
         raise HTTPException(
             status_code=404,
             detail={
                 "success": False,
-                "error": "Brand not found",
-                "detail": f"The brand '{brand_id}' does not exist. "
-                         f"Available brands: {', '.join(brand_service.get_brand_ids())}"
+                "error": "Not found",
+                "detail": f"'{url_code}' is not a valid code or brand."
             }
         )
 
