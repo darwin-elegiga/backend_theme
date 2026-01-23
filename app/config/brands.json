@@ -50,58 +50,69 @@
     },
     "placeholders": {
       "car": {
-        "front": "car/front.webp",
-        "frontRight": "car/front-right.webp",
-        "rearRight": "car/rear-right.webp",
-        "rear": "car/rear.webp",
-        "rearLeft": "car/rear-left.webp",
-        "frontLeft": "car/front-left.webp"
+        "front": "car/car-illustration-front.png",
+        "frontRight": "car/car-illustration-front-right.png",
+        "right": "car/car-illustration-right.png",
+        "rearRight": "car/car-illustration-rear-right.png",
+        "rear": "car/car-illustration-rear.png",
+        "rearLeft": "car/car-illustration-rear-left.png",
+        "left": "car/car-illustration-left.png",
+        "frontLeft": "car/car-illustration-front-left.png"
       },
       "moto": {
-        "front": "moto/front.webp",
-        "right": "moto/right.webp",
-        "rear": "moto/rear.webp",
-        "left": "moto/left.webp"
+        "front": "moto/moto-illustration-front.png",
+        "right": "moto/moto-illustration-right.png",
+        "rear": "moto/moto-illustration-rear.png",
+        "left": "moto/moto-illustration-left.png"
       },
       "odometer": {
-        "mileage": "odometer/mileage.webp"
+        "mileage": "odometer/odometer-illustration.png"
       },
       "documentation": {
-        "dniFront": "documentation/dni-front.webp",
-        "dniBack": "documentation/dni-back.webp",
-        "licenseFront": "documentation/license-front.webp",
-        "licenseBack": "documentation/license-back.webp",
-        "dataSheetFront": "documentation/data-sheet-front.webp",
-        "dataSheetBack": "documentation/data-sheet-back.webp",
-        "circulationPermit": "documentation/circulation-permit.webp"
+        "dniIllustrationFront": "documentation/dni-illustration-anverso.png",
+        "dniIllustrationBack": "documentation/dni-illustration-reverso.png",
+        "dniPhotoFront": "documentation/dni-photography-anverso.png",
+        "dniPhotoBack": "documentation/dni-photography-reverso.png",
+        "licenseIllustrationFront": "documentation/license-illustration-anverso.png",
+        "licenseIllustrationBack": "documentation/license-illustration-reverso.png",
+        "licensePhotoFront": "documentation/license-photography-anverso.png",
+        "licensePhotoBack": "documentation/license-photography-reverso.png",
+        "dataSheetIllustrationFront": "documentation/datasheet-illustration-anverso.png",
+        "dataSheetIllustrationBack": "documentation/datasheet-illustration-reverso.png",
+        "dataSheetPhotoFront": "documentation/datasheet-photography-anverso.png",
+        "dataSheetPhotoBack": "documentation/datasheet-photography-reverso.png",
+        "circulationIllustrationFront": "documentation/circulation-illustration-anverso.png",
+        "circulationIllustrationBack": "documentation/circulation-illustration-reverso.png",
+        "circulationPhotoFront": "documentation/circulation-photography-anverso.png",
+        "circulationPhotoBack": "documentation/circulation-photography-reverso.png"
       }
     }
   },
   "santander": {
     "customerName": "santander",
     "colors": {
-      "primary": "#EC0000",
-      "primaryDisabled": "#ec00009d",
-      "secondary": "#1A1A1A",
-      "link": "#0066CC",
+      "primary": "#1565C0",
+      "primaryDisabled": "#1565C09d",
+      "secondary": "#0D47A1",
+      "link": "#2196F3",
       "background": "#FFFFFF",
-      "backgroundSecondary": "#F5F5F5",
-      "headerBackground": "#EC0000",
-      "navBar": "#EC0000",
-      "navBarSecondary": "#B30000",
-      "text": "#1A1A1A",
-      "textSecondary": "#666666",
-      "border": "#E0E0E0",
-      "overlay": "rgba(0, 0, 0, 0.4)",
-      "error": "#D32F2F",
-      "errorBackground": "#FFEBEE",
-      "errorText": "#D32F2F",
-      "success": "#2E7D32",
-      "warning": "#F57C00",
-      "buttonNext": "#EC0000",
+      "backgroundSecondary": "#E3F2FD",
+      "headerBackground": "#1565C0",
+      "navBar": "#1565C0",
+      "navBarSecondary": "#0D47A1",
+      "text": "#0D47A1",
+      "textSecondary": "#1976D2",
+      "border": "#90CAF9",
+      "overlay": "rgba(21, 101, 192, 0.5)",
+      "error": "#1976D2",
+      "errorBackground": "#BBDEFB",
+      "errorText": "#0D47A1",
+      "success": "#1565C0",
+      "warning": "#42A5F5",
+      "buttonNext": "#1565C0",
       "buttonNextText": "#FFFFFF",
-      "buttonBack": "transparent",
-      "buttonBackText": "#EC0000"
+      "buttonBack": "#E3F2FD",
+      "buttonBackText": "#1565C0"
     },
     "fonts": {
       "primary": {
@@ -117,35 +128,46 @@
       "fallback": "Arial, sans-serif"
     },
     "logos": {
-      "header": "logo.svg",
-      "favicon": "favicon.ico"
+      "header": "placeholders/logo.svg",
+      "favicon": "placeholders/favicon.ico"
     },
     "placeholders": {
       "car": {
-        "front": "car/front.webp",
-        "frontRight": "car/front-right.webp",
-        "rearRight": "car/rear-right.webp",
-        "rear": "car/rear.webp",
-        "rearLeft": "car/rear-left.webp",
-        "frontLeft": "car/front-left.webp"
+        "front": "car/car-illustration-front.png",
+        "frontRight": "car/car-illustration-front-right.png",
+        "right": "car/car-illustration-right.png",
+        "rearRight": "car/car-illustration-rear-right.png",
+        "rear": "car/car-illustration-rear.png",
+        "rearLeft": "car/car-illustration-rear-left.png",
+        "left": "car/car-illustration-left.png",
+        "frontLeft": "car/car-illustration-front-left.png"
       },
       "moto": {
-        "front": "moto/front.webp",
-        "right": "moto/right.webp",
-        "rear": "moto/rear.webp",
-        "left": "moto/left.webp"
+        "front": "moto/moto-illustration-front.png",
+        "right": "moto/moto-illustration-right.png",
+        "rear": "moto/moto-illustration-rear.png",
+        "left": "moto/moto-illustration-left.png"
       },
       "odometer": {
-        "mileage": "odometer/mileage.webp"
+        "mileage": "odometer/odometer-illustration.png"
       },
       "documentation": {
-        "dniFront": "documentation/dni-front.webp",
-        "dniBack": "documentation/dni-back.webp",
-        "licenseFront": "documentation/license-front.webp",
-        "licenseBack": "documentation/license-back.webp",
-        "dataSheetFront": "documentation/data-sheet-front.webp",
-        "dataSheetBack": "documentation/data-sheet-back.webp",
-        "circulationPermit": "documentation/circulation-permit.webp"
+        "dniIllustrationFront": "documentation/dni-illustration-anverso.png",
+        "dniIllustrationBack": "documentation/dni-illustration-reverso.png",
+        "dniPhotoFront": "documentation/dni-photography-anverso.png",
+        "dniPhotoBack": "documentation/dni-photography-reverso.png",
+        "licenseIllustrationFront": "documentation/license-illustration-anverso.png",
+        "licenseIllustrationBack": "documentation/license-illustration-reverso.png",
+        "licensePhotoFront": "documentation/license-photography-anverso.png",
+        "licensePhotoBack": "documentation/license-photography-reverso.png",
+        "dataSheetIllustrationFront": "documentation/datasheet-illustration-anverso.png",
+        "dataSheetIllustrationBack": "documentation/datasheet-illustration-reverso.png",
+        "dataSheetPhotoFront": "documentation/datasheet-photography-anverso.png",
+        "dataSheetPhotoBack": "documentation/datasheet-photography-reverso.png",
+        "circulationIllustrationFront": "documentation/circulation-illustration-anverso.png",
+        "circulationIllustrationBack": "documentation/circulation-illustration-reverso.png",
+        "circulationPhotoFront": "documentation/circulation-photography-anverso.png",
+        "circulationPhotoBack": "documentation/circulation-photography-reverso.png"
       }
     }
   }

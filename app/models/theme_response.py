@@ -4,7 +4,7 @@ Define la estructura completa del JSON que consume el frontend.
 """
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import Dict, List, Optional
 from pydantic import BaseModel
 
 
@@ -61,46 +61,19 @@ class Logos(BaseModel):
     favicon: str
 
 
-class CarPlaceholders(BaseModel):
-    """Placeholders para fotos de coches."""
-    front: str
-    frontRight: str
-    rearRight: str
-    rear: str
-    rearLeft: str
-    frontLeft: str
-
-
-class MotoPlaceholders(BaseModel):
-    """Placeholders para fotos de motos."""
-    front: str
-    right: str
-    rear: str
-    left: str
-
-
-class OdometerPlaceholders(BaseModel):
-    """Placeholders para odómetro."""
-    mileage: str
-
-
-class DocumentationPlaceholders(BaseModel):
-    """Placeholders para documentación."""
-    dniFront: str
-    dniBack: str
-    licenseFront: str
-    licenseBack: str
-    dataSheetFront: str
-    dataSheetBack: str
-    circulationPermit: str
+# Placeholders dinámicos - permite cualquier estructura
+CarPlaceholders = Dict[str, str]
+MotoPlaceholders = Dict[str, str]
+OdometerPlaceholders = Dict[str, str]
+DocumentationPlaceholders = Dict[str, str]
 
 
 class Placeholders(BaseModel):
     """Todos los placeholders organizados por categoría."""
-    car: CarPlaceholders
-    moto: MotoPlaceholders
-    odometer: OdometerPlaceholders
-    documentation: DocumentationPlaceholders
+    car: Dict[str, str]
+    moto: Dict[str, str]
+    odometer: Dict[str, str]
+    documentation: Dict[str, str]
 
 
 class ThemeData(BaseModel):

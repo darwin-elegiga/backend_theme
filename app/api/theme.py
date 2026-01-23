@@ -14,10 +14,6 @@ from app.models.theme_response import (
     FontVariant,
     Logos,
     Placeholders,
-    CarPlaceholders,
-    MotoPlaceholders,
-    OdometerPlaceholders,
-    DocumentationPlaceholders,
     ErrorResponse
 )
 from app.services.brand_service import (
@@ -108,14 +104,51 @@ async def get_theme(brand_id: str) -> ThemeResponse:
         ),
         logos=Logos(**logos_urls),
         placeholders=Placeholders(
-            car=CarPlaceholders(**placeholders_urls["car"]),
-            moto=MotoPlaceholders(**placeholders_urls["moto"]),
-            odometer=OdometerPlaceholders(**placeholders_urls["odometer"]),
-            documentation=DocumentationPlaceholders(**placeholders_urls["documentation"])
+            car=placeholders_urls["car"],
+            moto=placeholders_urls["moto"],
+            odometer=placeholders_urls["odometer"],
+            documentation=placeholders_urls["documentation"]
         )
     )
 
     return ThemeResponse(success=True, data=theme_data)
+
+
+@router.get(
+    "/theme/{brand_id}/colors",
+    summary="Obtiene solo los colores de un brand",
+    description="Retorna únicamente la paleta de colores del tema."
+)
+async def get_theme_colors(brand_id: str) -> dict:
+    """
+    Obtiene solo los colores de un brand.
+
+    Args:
+        brand_id: Identificador único del brand (ej: mapfre, santander)
+
+    Returns:
+        Diccionario con los colores del tema
+    """
+    brand_service = get_brand_service()
+
+    try:
+        config = brand_service.get_brand_config(brand_id)
+    except BrandNotFoundError:
+        raise HTTPException(
+            status_code=404,
+            detail={
+                "success": False,
+                "error": "Brand not found",
+                "detail": f"The brand '{brand_id}' does not exist. "
+                         f"Available brands: {', '.join(brand_service.get_brand_ids())}"
+            }
+        )
+
+    return {
+        "success": True,
+        "customerName": config["customerName"],
+        "colors": config["colors"]
+    }
 
 
 @router.get(
