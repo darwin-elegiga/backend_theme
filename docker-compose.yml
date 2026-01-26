@@ -1,25 +1,33 @@
-version: '3.8'
+# Docker Compose para Theme Backend
+# Uso:
+#   Producción:  docker-compose up -d
+#   Desarrollo:  docker-compose --profile dev up theme-api-dev
+#   Build:       docker-compose build --no-cache
 
 services:
+  # ==========================================================================
+  # Servicio de Producción
+  # ==========================================================================
   theme-api:
     build:
       context: .
-      dockerfile: dockerfile
+      dockerfile: Dockerfile
+    image: theme-backend:latest
     container_name: theme-backend
     ports:
       - "8000:8000"
     volumes:
-      # Volumen para archivos estáticos (imágenes, fuentes)
+      # Persistir archivos estáticos (logos, placeholders, fuentes)
       - ./static:/app/static
-      # Volumen para desarrollo (hot reload del código)
-      - ./app:/app/app
+      # Persistir configuración de brands
+      - ./app/config:/app/app/config
     environment:
       # URL base para assets estáticos
-      # Cambiar a CDN en producción: https://cdn.example.com
+      # Cambiar a CDN en producción: https://cdn.example.com/static
       - STATIC_BASE_URL=http://localhost:8000/static
       # CORS - orígenes permitidos (separados por coma)
       - CORS_ORIGINS=http://localhost:3000,http://localhost:5173,*
-      # Cache
+      # Cache habilitado en producción
       - ENABLE_CACHE=true
       - CACHE_TTL=3600
       # Python
@@ -31,23 +39,39 @@ services:
       timeout: 10s
       retries: 3
       start_period: 10s
+    networks:
+      - theme-network
 
-  # Servicio opcional para desarrollo con hot reload
+  # ==========================================================================
+  # Servicio de Desarrollo (con hot reload)
+  # Activar con: docker-compose --profile dev up theme-api-dev
+  # ==========================================================================
   theme-api-dev:
     build:
       context: .
-      dockerfile: dockerfile
+      dockerfile: Dockerfile
+    image: theme-backend:dev
     container_name: theme-backend-dev
     ports:
       - "8001:8000"
     volumes:
-      - ./static:/app/static
+      # Montar código para hot reload
       - ./app:/app/app
+      # Montar archivos estáticos
+      - ./static:/app/static
     environment:
       - STATIC_BASE_URL=http://localhost:8001/static
       - CORS_ORIGINS=*
+      # Cache deshabilitado en desarrollo
       - ENABLE_CACHE=false
       - PYTHONUNBUFFERED=1
+    # Comando con --reload para desarrollo
     command: ["python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
     profiles:
       - dev
+    networks:
+      - theme-network
+
+networks:
+  theme-network:
+    driver: bridge
