@@ -55,6 +55,7 @@ class Colors(BaseModel):
     buttonBackText: str
     buttonLoginDisabled: str
     skeleton: str
+    errorModalBackground: str
 
 
 class Logos(BaseModel):

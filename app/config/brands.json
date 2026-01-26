@@ -10,7 +10,7 @@
       "headerBackground": "#ffffff",
       "navBar": "#D81E05",
       "navBarSecondary": "#B30000",
-      "text": "#1A1A1A",
+      "text": "#2d373d",
       "textSecondary": "#666666",
       "overlay": "rgba(0, 0, 0, 0.4)",
       "error": "#D32F2F",
@@ -24,26 +24,57 @@
       "buttonBack": "transparent",
       "buttonBackDisabled": "#ea7669",
       "buttonBackText": "#D81E05",
-      "buttonLoginDisabled": "#d81e0566",
-      "skeleton": "#E0E0E0"
+      "buttonLoginDisabled": "#acacac",
+      "skeleton": "#E0E0E0",
+      "errorModalBackground": "#fdf2f2"
     },
     "fonts": {
       "primary": {
-        "name": "Mapfre Sans",
+        "name": "Mapfre Display",
         "variants": [
           {
-            "file": "MapfreSans-Light.woff2",
+            "file": "MapfreDisplay-Light-Italic.woff2",
+            "weight": 300,
+            "style": "italic"
+          },
+          {
+            "file": "MapfreDisplay-Light.woff2",
             "weight": 300,
             "style": "normal"
           },
           {
-            "file": "MapfreSans-Regular.woff2",
+            "file": "MapfreDisplay-Regular-Italic.woff2",
+            "weight": 400,
+            "style": "italic"
+          },
+          {
+            "file": "MapfreDisplay-Regular.woff2",
             "weight": 400,
             "style": "normal"
           },
           {
-            "file": "MapfreSans-Bold.woff2",
+            "file": "MapfreDisplay-Medium-Italic.woff2",
+            "weight": 500,
+            "style": "italic"
+          },
+          {
+            "file": "MapfreDisplay-Medium.woff2",
+            "weight": 500,
+            "style": "normal"
+          },
+          {
+            "file": "MapfreDisplay-Bold.woff2",
             "weight": 700,
+            "style": "normal"
+          },
+          {
+            "file": "MapfreDisplay-ExtraBold-Italic.woff2",
+            "weight": 800,
+            "style": "italic"
+          },
+          {
+            "file": "MapfreDisplay-ExtraBold.woff2",
+            "weight": 800,
             "style": "normal"
           }
         ]
@@ -52,13 +83,38 @@
         "name": "Mapfre Text",
         "variants": [
           {
+            "file": "MapfreText-Light-Italic.woff2",
+            "weight": 300,
+            "style": "italic"
+          },
+          {
+            "file": "MapfreText-Light.woff2",
+            "weight": 300,
+            "style": "normal"
+          },
+          {
+            "file": "MapfreText-Regular-Italic.woff2",
+            "weight": 400,
+            "style": "italic"
+          },
+          {
             "file": "MapfreText-Regular.woff2",
             "weight": 400,
             "style": "normal"
           },
           {
-            "file": "MapfreText-Italic.woff2",
-            "weight": 400,
+            "file": "MapfreText-Medium-Italic.woff2",
+            "weight": 500,
+            "style": "italic"
+          },
+          {
+            "file": "MapfreText-Medium.woff2",
+            "weight": 500,
+            "style": "normal"
+          },
+          {
+            "file": "MapfreText-Bold-Italic.woff2",
+            "weight": 700,
             "style": "italic"
           },
           {
@@ -77,7 +133,7 @@
     "placeholders": {
       "car": {
         "front": "car/car-illustration-front.png",
-        "frontRight": "car/car-illustration-front-right.png",
+        "frontRight": "car/car-illustration-frontRight.png",
         "right": "car/car-illustration-right.png",
         "rearRight": "car/car-illustration-rear-right.png",
         "rear": "car/car-illustration-rear.png",
@@ -132,7 +188,8 @@
       "buttonBackDisabled": "#A9A9A9",
       "buttonBackText": "#1E90FF",
       "buttonLoginDisabled": "#7B68EE",
-      "skeleton": "#BA55D3"
+      "skeleton": "#BA55D3",
+      "errorModalBackground": "#fdf2f2"
     },
     "fonts": {
       "primary": {

@@ -58,6 +58,7 @@ class ColorsUpdate(BaseModel):
     buttonBackText: Optional[str] = None
     buttonLoginDisabled: Optional[str] = None
     skeleton: Optional[str] = None
+    errorModalBackground: Optional[str] = None
 
 
 class BrandCreate(BaseModel):
@@ -87,6 +88,8 @@ def save_brands(data: Dict[str, Any]) -> None:
     """Save brands.json file."""
     with open(BRANDS_JSON_PATH, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
+        f.flush()
+        os.fsync(f.fileno())
     # Clear cache if enabled
     from app.services.brand_service import get_brand_service
     service = get_brand_service()
@@ -219,7 +222,8 @@ async def create_brand(brand_data: BrandCreate):
                 "buttonBackDisabled": "#E0E0E0",
                 "buttonBackText": "#000000",
                 "buttonLoginDisabled": "#00000066",
-                "skeleton": "#E0E0E0"
+                "skeleton": "#E0E0E0",
+                "errorModalBackground": "#fdf2f2"
             },
             "fonts": {
                 "primary": {
@@ -515,4 +519,76 @@ async def delete_font_variant(brand_id: str, font_type: str, weight: int, style:
         raise HTTPException(status_code=404, detail="Font variant not found")
 
     save_brands(brands)
+    return {"success": True}
+
+
+# ============================================================================
+# URL Codes API
+# ============================================================================
+
+CODES_JSON_PATH = Path(__file__).parent.parent / "config" / "brand_codes.json"
+
+
+def load_codes() -> Dict[str, str]:
+    """Load brand_codes.json file."""
+    with open(CODES_JSON_PATH, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def save_codes(data: Dict[str, str]) -> None:
+    """Save brand_codes.json file."""
+    with open(CODES_JSON_PATH, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
+        f.flush()
+        os.fsync(f.fileno())
+    # Clear cache if enabled
+    from app.services.code_service import get_code_service
+    service = get_code_service()
+    service._codes_cache = None
+
+
+class UrlCodeCreate(BaseModel):
+    """Model for creating a URL code mapping."""
+    code: str
+    brand_id: str
+
+
+@router.get("/api/codes")
+async def list_codes():
+    """List all URL code mappings."""
+    codes = load_codes()
+    return {"success": True, "codes": codes}
+
+
+@router.post("/api/codes")
+async def create_code(data: UrlCodeCreate):
+    """Create a new URL code mapping."""
+    codes = load_codes()
+    brands = load_brands()
+
+    # Validate brand exists
+    if data.brand_id not in brands:
+        raise HTTPException(status_code=404, detail=f"Brand '{data.brand_id}' not found")
+
+    # Check if code already exists
+    if data.code in codes:
+        raise HTTPException(status_code=400, detail=f"Code '{data.code}' already exists")
+
+    codes[data.code] = data.brand_id
+    save_codes(codes)
+
+    return {"success": True, "code": data.code, "brand_id": data.brand_id}
+
+
+@router.delete("/api/codes/{code}")
+async def delete_code(code: str):
+    """Delete a URL code mapping."""
+    codes = load_codes()
+
+    if code not in codes:
+        raise HTTPException(status_code=404, detail=f"Code '{code}' not found")
+
+    del codes[code]
+    save_codes(codes)
+
     return {"success": True}

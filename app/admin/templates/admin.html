@@ -332,6 +332,65 @@
             <p class="text-gray-500">Elige un brand del selector superior para comenzar a editar</p>
         </div>
 
+        <!-- URL Codes Section (Global - independent of brand selection) -->
+        <div class="bg-white rounded-lg shadow-sm p-6 mt-6">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h2 class="text-xl font-semibold text-gray-800">URL Codes</h2>
+                    <p class="text-gray-500 text-sm mt-1">Mapea códigos URL a brands</p>
+                </div>
+                <button @click="showUrlCodeModal = true"
+                        class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                    + Nuevo Código
+                </button>
+            </div>
+
+            <!-- URL Codes Table -->
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-4 py-3 text-sm font-medium text-gray-600">Código URL</th>
+                            <th class="px-4 py-3 text-sm font-medium text-gray-600">Brand</th>
+                            <th class="px-4 py-3 text-sm font-medium text-gray-600">URL de Prueba</th>
+                            <th class="px-4 py-3 text-sm font-medium text-gray-600 text-right">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <template x-for="(brandId, code) in urlCodes" :key="code">
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-4 py-3">
+                                    <code class="bg-gray-100 px-2 py-1 rounded text-sm" x-text="code"></code>
+                                </td>
+                                <td class="px-4 py-3">
+                                    <span class="font-medium text-gray-700" x-text="brandId"></span>
+                                </td>
+                                <td class="px-4 py-3">
+                                    <a :href="'/api/theme/' + code" target="_blank"
+                                       class="text-blue-600 hover:text-blue-800 text-sm">
+                                        /api/theme/<span x-text="code"></span>
+                                    </a>
+                                </td>
+                                <td class="px-4 py-3 text-right">
+                                    <button @click="deleteUrlCode(code)"
+                                            class="text-red-500 hover:text-red-700 p-1">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                        </svg>
+                                    </button>
+                                </td>
+                            </tr>
+                        </template>
+                        <tr x-show="Object.keys(urlCodes).length === 0">
+                            <td colspan="4" class="px-4 py-8 text-center text-gray-500">
+                                No hay códigos URL configurados
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
         <!-- New Brand Modal -->
         <div x-show="showNewBrandModal" x-cloak
              class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -436,6 +495,45 @@
             </div>
         </div>
 
+        <!-- URL Code Modal -->
+        <div x-show="showUrlCodeModal" x-cloak
+             class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md" @click.outside="showUrlCodeModal = false">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">Nuevo Código URL</h3>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Código URL</label>
+                        <input type="text" x-model="newUrlCode.code"
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                               placeholder="b911a374a2cb41">
+                        <p class="text-xs text-gray-500 mt-1">Identificador único para acceder al tema</p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Brand</label>
+                        <select x-model="newUrlCode.brand_id"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="">Seleccionar brand...</option>
+                            <template x-for="brand in brands" :key="brand">
+                                <option :value="brand" x-text="brand"></option>
+                            </template>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-3 mt-6">
+                    <button @click="showUrlCodeModal = false"
+                            class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">
+                        Cancelar
+                    </button>
+                    <button @click="createUrlCode()"
+                            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                        Crear Código
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <!-- Toast Notifications -->
         <div x-show="toast.show" x-cloak
              x-transition:enter="transition ease-out duration-300"
@@ -465,10 +563,15 @@
                 // Modals
                 showNewBrandModal: false,
                 showFontModal: false,
+                showUrlCodeModal: false,
 
                 // Forms
                 newBrand: { id: '', name: '', copyFrom: '' },
                 fontUpload: { type: 'primary', file: null, name: '', weight: '400', style: 'normal' },
+                newUrlCode: { code: '', brand_id: '' },
+
+                // URL Codes
+                urlCodes: {},
 
                 // Loading states
                 savingColors: false,
@@ -496,6 +599,8 @@
                     this.selectedBrand = '';
                     this.brandConfig = null;
                     this.logoErrors = { header: false, favicon: false };
+                    // Load URL codes
+                    await this.loadUrlCodes();
                 },
 
                 async loadBrand() {
@@ -507,19 +612,26 @@
 
                     this.loading = true;
                     try {
-                        const response = await fetch(`/admin/api/brands/${this.selectedBrand}`);
+                        // Add cache buster to prevent stale data
+                        const timestamp = Date.now();
+                        const response = await fetch(`/admin/api/brands/${this.selectedBrand}?_t=${timestamp}`);
                         const data = await response.json();
-                        this.brandConfig = data.data;
+
+                        // Force new object reference for Alpine reactivity
+                        this.brandConfig = JSON.parse(JSON.stringify(data.data));
 
                         // Refresh cache buster for images and reset errors
-                        this.imageCacheBuster = Date.now();
+                        this.imageCacheBuster = timestamp;
                         this.logoErrors = { header: false, favicon: false };
 
                         // Ensure fonts structure exists
                         if (!this.brandConfig.fonts.secondary) {
                             this.brandConfig.fonts.secondary = { name: '', variants: [] };
                         }
+
+                        console.log('Brand loaded:', this.selectedBrand, 'Primary variants:', this.brandConfig.fonts.primary?.variants?.length || 0);
                     } catch (error) {
+                        console.error('Error loading brand:', error);
                         this.showToast('Error loading brand', 'error');
                     } finally {
                         this.loading = false;
@@ -772,6 +884,64 @@
                         }
                     } catch (error) {
                         this.showToast(error.message || 'Error creando brand', 'error');
+                    }
+                },
+
+                // ==================== URL Codes Management ====================
+
+                async loadUrlCodes() {
+                    try {
+                        const response = await fetch('/admin/api/codes');
+                        const data = await response.json();
+                        this.urlCodes = data.codes || {};
+                    } catch (error) {
+                        console.error('Error loading URL codes:', error);
+                    }
+                },
+
+                async createUrlCode() {
+                    if (!this.newUrlCode.code || !this.newUrlCode.brand_id) {
+                        this.showToast('Código y brand son requeridos', 'error');
+                        return;
+                    }
+
+                    try {
+                        const response = await fetch('/admin/api/codes', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(this.newUrlCode)
+                        });
+
+                        if (response.ok) {
+                            await this.loadUrlCodes();
+                            this.showUrlCodeModal = false;
+                            this.newUrlCode = { code: '', brand_id: '' };
+                            this.showToast('Código URL creado correctamente', 'success');
+                        } else {
+                            const error = await response.json();
+                            throw new Error(error.detail || 'Create failed');
+                        }
+                    } catch (error) {
+                        this.showToast(error.message || 'Error creando código URL', 'error');
+                    }
+                },
+
+                async deleteUrlCode(code) {
+                    if (!confirm(`¿Eliminar el código "${code}"?`)) return;
+
+                    try {
+                        const response = await fetch(`/admin/api/codes/${code}`, {
+                            method: 'DELETE'
+                        });
+
+                        if (response.ok) {
+                            await this.loadUrlCodes();
+                            this.showToast('Código URL eliminado', 'success');
+                        } else {
+                            throw new Error('Delete failed');
+                        }
+                    } catch (error) {
+                        this.showToast('Error eliminando código URL', 'error');
                     }
                 },
 
