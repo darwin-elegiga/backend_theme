@@ -56,6 +56,7 @@ class ColorsUpdate(BaseModel):
     buttonBack: Optional[str] = None
     buttonBackDisabled: Optional[str] = None
     buttonBackText: Optional[str] = None
+    buttonLoginDisabled: Optional[str] = None
     skeleton: Optional[str] = None
 
 
@@ -217,6 +218,7 @@ async def create_brand(brand_data: BrandCreate):
                 "buttonBack": "transparent",
                 "buttonBackDisabled": "#E0E0E0",
                 "buttonBackText": "#000000",
+                "buttonLoginDisabled": "#00000066",
                 "skeleton": "#E0E0E0"
             },
             "fonts": {

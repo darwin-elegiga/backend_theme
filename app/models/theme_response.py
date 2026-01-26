@@ -53,6 +53,7 @@ class Colors(BaseModel):
     buttonBack: str
     buttonBackDisabled: str
     buttonBackText: str
+    buttonLoginDisabled: str
     skeleton: str
 
 

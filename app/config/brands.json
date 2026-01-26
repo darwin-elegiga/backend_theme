@@ -5,9 +5,9 @@
       "primary": "#D81E05",
       "secondary": "#1A1A1A",
       "link": "#D81E05",
-      "background": "#FFFFFF",
+      "background": "#f8f9fa",
       "backgroundSecondary": "#F5F5F5",
-      "headerBackground": "#D81E05",
+      "headerBackground": "#ffffff",
       "navBar": "#D81E05",
       "navBarSecondary": "#B30000",
       "text": "#1A1A1A",
@@ -22,8 +22,9 @@
       "buttonNextDisabled": "#d81e059d",
       "buttonNextText": "#FFFFFF",
       "buttonBack": "transparent",
-      "buttonBackDisabled": "#E0E0E0",
+      "buttonBackDisabled": "#ea7669",
       "buttonBackText": "#D81E05",
+      "buttonLoginDisabled": "#d81e0566",
       "skeleton": "#E0E0E0"
     },
     "fonts": {
@@ -130,6 +131,7 @@
       "buttonBack": "#FF1493",
       "buttonBackDisabled": "#A9A9A9",
       "buttonBackText": "#1E90FF",
+      "buttonLoginDisabled": "#7B68EE",
       "skeleton": "#BA55D3"
     },
     "fonts": {
