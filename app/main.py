@@ -18,6 +18,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from app.api.theme import router as theme_router
+from app.admin import admin_router
 from app.config.settings import get_settings
 
 
@@ -30,6 +31,7 @@ async def lifespan(app: FastAPI):
     print(f"📁 Static files: {settings.STATIC_DIR}")
     print(f"🌐 Static base URL: {settings.STATIC_BASE_URL}")
     print(f"💾 Cache enabled: {settings.ENABLE_CACHE}")
+    print(f"🔧 Admin panel: http://localhost:8000/admin")
     yield
     # Shutdown
     print("👋 Theme Backend shutting down...")
@@ -85,6 +87,7 @@ def create_app() -> FastAPI:
 
     # Registrar routers
     app.include_router(theme_router)
+    app.include_router(admin_router)
 
     return app
 

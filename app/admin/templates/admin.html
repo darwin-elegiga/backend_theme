@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theme Admin Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        [x-cloak] { display: none !important; }
+        .color-input { -webkit-appearance: none; border: none; width: 40px; height: 40px; cursor: pointer; border-radius: 8px; }
+        .color-input::-webkit-color-swatch-wrapper { padding: 0; }
+        .color-input::-webkit-color-swatch { border: 2px solid #e5e7eb; border-radius: 6px; }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div x-data="adminPanel()" x-init="init()" class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="bg-white rounded-lg shadow-sm p-6 mb-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800">Theme Admin Panel</h1>
+                    <p class="text-gray-500 text-sm mt-1">Gestiona colores, logos, placeholders y fuentes</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <!-- Brand Selector -->
+                    <select x-model="selectedBrand" @change="loadBrand()"
+                            class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">Selecciona un brand</option>
+                        <template x-for="brand in brands" :key="brand">
+                            <option :value="brand" x-text="brand"></option>
+                        </template>
+                    </select>
+                    <!-- New Brand Button -->
+                    <button @click="showNewBrandModal = true"
+                            class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+                        + Nuevo Brand
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Loading State -->
+        <div x-show="loading" class="text-center py-12">
+            <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-blue-500 border-t-transparent"></div>
+            <p class="mt-2 text-gray-500">Cargando...</p>
+        </div>
+
+        <!-- Main Content -->
+        <div x-show="!loading && selectedBrand && brandConfig" x-cloak>
+            <!-- Tabs -->
+            <div class="bg-white rounded-lg shadow-sm mb-6">
+                <nav class="flex border-b">
+                    <button @click="activeTab = 'colors'"
+                            :class="activeTab === 'colors' ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-500 hover:text-gray-700'"
+                            class="px-6 py-4 font-medium transition">
+                        Colores
+                    </button>
+                    <button @click="activeTab = 'logos'"
+                            :class="activeTab === 'logos' ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-500 hover:text-gray-700'"
+                            class="px-6 py-4 font-medium transition">
+                        Logos
+                    </button>
+                    <button @click="activeTab = 'placeholders'"
+                            :class="activeTab === 'placeholders' ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-500 hover:text-gray-700'"
+                            class="px-6 py-4 font-medium transition">
+                        Placeholders
+                    </button>
+                    <button @click="activeTab = 'fonts'"
+                            :class="activeTab === 'fonts' ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-500 hover:text-gray-700'"
+                            class="px-6 py-4 font-medium transition">
+                        Fuentes
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Colors Tab -->
+            <div x-show="activeTab === 'colors'" class="bg-white rounded-lg shadow-sm p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-semibold text-gray-800">Colores del Tema</h2>
+                    <button @click="saveColors()"
+                            :disabled="savingColors"
+                            class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition disabled:opacity-50">
+                        <span x-show="!savingColors">Guardar Colores</span>
+                        <span x-show="savingColors">Guardando...</span>
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                    <template x-for="(value, key) in brandConfig.colors" :key="key">
+                        <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                            <input type="color"
+                                   :value="getColorValue(value)"
+                                   @input="updateColor(key, $event.target.value)"
+                                   class="color-input">
+                            <div class="flex-1 min-w-0">
+                                <div class="font-medium text-gray-700 text-sm" x-text="formatColorName(key)"></div>
+                                <input type="text"
+                                       :value="value"
+                                       @input="updateColor(key, $event.target.value)"
+                                       class="w-full text-xs text-gray-500 bg-transparent border-none p-0 focus:ring-0">
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Logos Tab -->
+            <div x-show="activeTab === 'logos'" class="bg-white rounded-lg shadow-sm p-6">
+                <h2 class="text-xl font-semibold text-gray-800 mb-6">Logos</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Header Logo -->
+                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                        <h3 class="font-medium text-gray-700 mb-4">Logo Header</h3>
+                        <div class="mb-4 bg-gray-100 rounded-lg p-4 min-h-[100px] flex items-center justify-center">
+                            <img :src="getLogoUrl('header')"
+                                 alt="Logo"
+                                 class="max-h-20 max-w-full"
+                                 @error="$event.target.style.display='none'">
+                        </div>
+                        <input type="file"
+                               @change="uploadLogo('logo', $event)"
+                               accept=".svg,.png"
+                               class="hidden"
+                               :id="'logo-input'">
+                        <label :for="'logo-input'"
+                               class="inline-block px-4 py-2 bg-gray-200 text-gray-700 rounded-lg cursor-pointer hover:bg-gray-300 transition">
+                            Subir Logo (SVG, PNG)
+                        </label>
+                    </div>
+
+                    <!-- Favicon -->
+                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                        <h3 class="font-medium text-gray-700 mb-4">Favicon</h3>
+                        <div class="mb-4 bg-gray-100 rounded-lg p-4 min-h-[100px] flex items-center justify-center">
+                            <img :src="getLogoUrl('favicon')"
+                                 alt="Favicon"
+                                 class="max-h-16 max-w-full"
+                                 @error="$event.target.style.display='none'">
+                        </div>
+                        <input type="file"
+                               @change="uploadLogo('favicon', $event)"
+                               accept=".ico,.png"
+                               class="hidden"
+                               :id="'favicon-input'">
+                        <label :for="'favicon-input'"
+                               class="inline-block px-4 py-2 bg-gray-200 text-gray-700 rounded-lg cursor-pointer hover:bg-gray-300 transition">
+                            Subir Favicon (ICO, PNG)
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Placeholders Tab -->
+            <div x-show="activeTab === 'placeholders'" class="bg-white rounded-lg shadow-sm p-6">
+                <h2 class="text-xl font-semibold text-gray-800 mb-6">Placeholders</h2>
+
+                <!-- Placeholder Category Tabs -->
+                <div class="flex gap-2 mb-6">
+                    <button @click="placeholderCategory = 'car'"
+                            :class="placeholderCategory === 'car' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'"
+                            class="px-4 py-2 rounded-lg transition">
+                        Car (8)
+                    </button>
+                    <button @click="placeholderCategory = 'moto'"
+                            :class="placeholderCategory === 'moto' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'"
+                            class="px-4 py-2 rounded-lg transition">
+                        Moto (4)
+                    </button>
+                    <button @click="placeholderCategory = 'odometer'"
+                            :class="placeholderCategory === 'odometer' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'"
+                            class="px-4 py-2 rounded-lg transition">
+                        Odometer (1)
+                    </button>
+                    <button @click="placeholderCategory = 'documentation'"
+                            :class="placeholderCategory === 'documentation' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'"
+                            class="px-4 py-2 rounded-lg transition">
+                        Documentation (8)
+                    </button>
+                </div>
+
+                <!-- Placeholder Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <template x-for="(path, name) in getPlaceholders()" :key="name">
+                        <div class="border rounded-lg p-4 text-center">
+                            <div class="bg-gray-100 rounded-lg p-2 mb-3 h-32 flex items-center justify-center">
+                                <img :src="getPlaceholderUrl(path)"
+                                     :alt="name"
+                                     class="max-h-full max-w-full object-contain"
+                                     @error="$event.target.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23ddd%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2250%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23999%22>?</text></svg>'">
+                            </div>
+                            <div class="text-sm font-medium text-gray-700 mb-2" x-text="formatPlaceholderName(name)"></div>
+                            <input type="file"
+                                   @change="uploadPlaceholder(placeholderCategory, name, $event)"
+                                   accept=".png,.jpg,.jpeg,.webp,.avif"
+                                   class="hidden"
+                                   :id="'placeholder-' + placeholderCategory + '-' + name">
+                            <label :for="'placeholder-' + placeholderCategory + '-' + name"
+                                   class="inline-block px-3 py-1 text-sm bg-gray-200 text-gray-700 rounded cursor-pointer hover:bg-gray-300 transition">
+                                Cambiar
+                            </label>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Fonts Tab -->
+            <div x-show="activeTab === 'fonts'" class="bg-white rounded-lg shadow-sm p-6">
+                <h2 class="text-xl font-semibold text-gray-800 mb-6">Fuentes</h2>
+
+                <div class="space-y-8">
+                    <!-- Primary Font -->
+                    <div class="border rounded-lg p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-lg font-medium text-gray-700">Fuente Primaria</h3>
+                            <button @click="showFontUpload('primary')"
+                                    class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm">
+                                + Agregar Variante
+                            </button>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="block text-sm text-gray-600 mb-1">Nombre de la fuente</label>
+                            <input type="text"
+                                   x-model="brandConfig.fonts.primary.name"
+                                   @change="saveFontName('primary')"
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        </div>
+
+                        <div class="space-y-2">
+                            <template x-for="variant in brandConfig.fonts.primary?.variants || []" :key="variant.file">
+                                <div class="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
+                                    <div>
+                                        <span class="font-medium" x-text="variant.file"></span>
+                                        <span class="text-gray-500 text-sm ml-2">
+                                            Weight: <span x-text="variant.weight"></span>,
+                                            Style: <span x-text="variant.style"></span>
+                                        </span>
+                                    </div>
+                                    <button @click="deleteFont('primary', variant.weight, variant.style)"
+                                            class="text-red-500 hover:text-red-700">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+
+                    <!-- Secondary Font -->
+                    <div class="border rounded-lg p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-lg font-medium text-gray-700">Fuente Secundaria</h3>
+                            <button @click="showFontUpload('secondary')"
+                                    class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm">
+                                + Agregar Variante
+                            </button>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="block text-sm text-gray-600 mb-1">Nombre de la fuente</label>
+                            <input type="text"
+                                   x-model="brandConfig.fonts.secondary.name"
+                                   @change="saveFontName('secondary')"
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        </div>
+
+                        <div class="space-y-2">
+                            <template x-for="variant in brandConfig.fonts.secondary?.variants || []" :key="variant.file">
+                                <div class="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
+                                    <div>
+                                        <span class="font-medium" x-text="variant.file"></span>
+                                        <span class="text-gray-500 text-sm ml-2">
+                                            Weight: <span x-text="variant.weight"></span>,
+                                            Style: <span x-text="variant.style"></span>
+                                        </span>
+                                    </div>
+                                    <button @click="deleteFont('secondary', variant.weight, variant.style)"
+                                            class="text-red-500 hover:text-red-700">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+
+                    <!-- Fallback -->
+                    <div class="border rounded-lg p-6">
+                        <h3 class="text-lg font-medium text-gray-700 mb-4">Fallback</h3>
+                        <input type="text"
+                               x-model="brandConfig.fonts.fallback"
+                               @change="saveFontFallback()"
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                               placeholder="Arial, sans-serif">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty State -->
+        <div x-show="!loading && !selectedBrand" class="text-center py-16 bg-white rounded-lg shadow-sm">
+            <svg class="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+            </svg>
+            <h3 class="text-lg font-medium text-gray-700 mb-2">Selecciona un brand</h3>
+            <p class="text-gray-500">Elige un brand del selector superior para comenzar a editar</p>
+        </div>
+
+        <!-- New Brand Modal -->
+        <div x-show="showNewBrandModal" x-cloak
+             class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md" @click.outside="showNewBrandModal = false">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">Crear Nuevo Brand</h3>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">ID del Brand</label>
+                        <input type="text" x-model="newBrand.id"
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                               placeholder="mi-brand">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Nombre del Cliente</label>
+                        <input type="text" x-model="newBrand.name"
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                               placeholder="Mi Empresa">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Copiar configuración de</label>
+                        <select x-model="newBrand.copyFrom"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="">Crear desde cero</option>
+                            <template x-for="brand in brands" :key="brand">
+                                <option :value="brand" x-text="brand"></option>
+                            </template>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-3 mt-6">
+                    <button @click="showNewBrandModal = false"
+                            class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">
+                        Cancelar
+                    </button>
+                    <button @click="createBrand()"
+                            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                        Crear Brand
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Font Upload Modal -->
+        <div x-show="showFontModal" x-cloak
+             class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md" @click.outside="showFontModal = false">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">Subir Fuente</h3>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Archivo de Fuente (OTF, TTF, WOFF2)</label>
+                        <input type="file"
+                               @change="fontUpload.file = $event.target.files[0]"
+                               accept=".otf,.ttf,.woff2"
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Nombre de la Fuente</label>
+                        <input type="text" x-model="fontUpload.name"
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                               placeholder="Roboto">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Peso (Weight)</label>
+                        <select x-model="fontUpload.weight"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="100">100 - Thin</option>
+                            <option value="200">200 - ExtraLight</option>
+                            <option value="300">300 - Light</option>
+                            <option value="400">400 - Regular</option>
+                            <option value="500">500 - Medium</option>
+                            <option value="600">600 - SemiBold</option>
+                            <option value="700">700 - Bold</option>
+                            <option value="800">800 - ExtraBold</option>
+                            <option value="900">900 - Black</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Estilo</label>
+                        <select x-model="fontUpload.style"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="normal">Normal</option>
+                            <option value="italic">Italic</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-3 mt-6">
+                    <button @click="showFontModal = false"
+                            class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">
+                        Cancelar
+                    </button>
+                    <button @click="uploadFont()"
+                            :disabled="uploadingFont"
+                            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition disabled:opacity-50">
+                        <span x-show="!uploadingFont">Subir Fuente</span>
+                        <span x-show="uploadingFont">Subiendo...</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Notifications -->
+        <div x-show="toast.show" x-cloak
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 transform translate-y-2"
+             x-transition:enter-end="opacity-100 transform translate-y-0"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100 transform translate-y-0"
+             x-transition:leave-end="opacity-0 transform translate-y-2"
+             class="fixed bottom-4 right-4 px-6 py-3 rounded-lg shadow-lg"
+             :class="toast.type === 'success' ? 'bg-green-600 text-white' : 'bg-red-600 text-white'">
+            <span x-text="toast.message"></span>
+        </div>
+    </div>
+
+    <script>
+        function adminPanel() {
+            return {
+                // State
+                brands: {{ brands | tojson }},
+                selectedBrand: '',
+                brandConfig: null,
+                loading: false,
+                activeTab: 'colors',
+                placeholderCategory: 'car',
+                staticBaseUrl: '{{ static_base_url }}',
+
+                // Modals
+                showNewBrandModal: false,
+                showFontModal: false,
+
+                // Forms
+                newBrand: { id: '', name: '', copyFrom: '' },
+                fontUpload: { type: 'primary', file: null, name: '', weight: '400', style: 'normal' },
+
+                // Loading states
+                savingColors: false,
+                uploadingFont: false,
+
+                // Toast
+                toast: { show: false, message: '', type: 'success' },
+
+                // Placeholder definitions
+                placeholderKeys: {
+                    car: ['front', 'frontRight', 'right', 'rearRight', 'rear', 'rearLeft', 'left', 'frontLeft'],
+                    moto: ['front', 'right', 'rear', 'left'],
+                    odometer: ['mileage'],
+                    documentation: ['dniFront', 'dniBack', 'licenseFront', 'licenseBack', 'dataSheetFront', 'dataSheetBack', 'circulationFront', 'circulationBack']
+                },
+
+                async init() {
+                    // Auto-select first brand if available
+                    if (this.brands.length > 0) {
+                        this.selectedBrand = this.brands[0];
+                        await this.loadBrand();
+                    }
+                },
+
+                async loadBrand() {
+                    if (!this.selectedBrand) {
+                        this.brandConfig = null;
+                        return;
+                    }
+
+                    this.loading = true;
+                    try {
+                        const response = await fetch(`/admin/api/brands/${this.selectedBrand}`);
+                        const data = await response.json();
+                        this.brandConfig = data.data;
+
+                        // Ensure fonts structure exists
+                        if (!this.brandConfig.fonts.secondary) {
+                            this.brandConfig.fonts.secondary = { name: '', variants: [] };
+                        }
+                    } catch (error) {
+                        this.showToast('Error loading brand', 'error');
+                    } finally {
+                        this.loading = false;
+                    }
+                },
+
+                async saveColors() {
+                    this.savingColors = true;
+                    try {
+                        const response = await fetch(`/admin/api/brands/${this.selectedBrand}/colors`, {
+                            method: 'PATCH',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(this.brandConfig.colors)
+                        });
+
+                        if (response.ok) {
+                            this.showToast('Colores guardados correctamente', 'success');
+                        } else {
+                            throw new Error('Save failed');
+                        }
+                    } catch (error) {
+                        this.showToast('Error guardando colores', 'error');
+                    } finally {
+                        this.savingColors = false;
+                    }
+                },
+
+                updateColor(key, value) {
+                    this.brandConfig.colors[key] = value;
+                },
+
+                getColorValue(value) {
+                    // Handle rgba and other non-hex values
+                    if (value.startsWith('rgba') || value.startsWith('rgb')) {
+                        return '#808080'; // Default gray for color picker
+                    }
+                    if (value === 'transparent') {
+                        return '#ffffff';
+                    }
+                    return value;
+                },
+
+                formatColorName(key) {
+                    return key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+                },
+
+                getLogoUrl(type) {
+                    if (!this.brandConfig?.logos) return '';
+                    const path = type === 'header' ? this.brandConfig.logos.header : this.brandConfig.logos.favicon;
+                    return `${this.staticBaseUrl}/brands/${this.selectedBrand}/images/${path}`;
+                },
+
+                async uploadLogo(type, event) {
+                    const file = event.target.files[0];
+                    if (!file) return;
+
+                    const formData = new FormData();
+                    formData.append('file', file);
+
+                    try {
+                        const endpoint = type === 'logo' ? 'logo' : 'favicon';
+                        const response = await fetch(`/admin/api/brands/${this.selectedBrand}/${endpoint}`, {
+                            method: 'POST',
+                            body: formData
+                        });
+
+                        if (response.ok) {
+                            await this.loadBrand();
+                            this.showToast('Logo subido correctamente', 'success');
+                        } else {
+                            throw new Error('Upload failed');
+                        }
+                    } catch (error) {
+                        this.showToast('Error subiendo logo', 'error');
+                    }
+                },
+
+                getPlaceholders() {
+                    const keys = this.placeholderKeys[this.placeholderCategory] || [];
+                    const placeholders = this.brandConfig?.placeholders?.[this.placeholderCategory] || {};
+
+                    // Return object with all expected keys
+                    const result = {};
+                    keys.forEach(key => {
+                        result[key] = placeholders[key] || '';
+                    });
+                    return result;
+                },
+
+                getPlaceholderUrl(path) {
+                    if (!path) return '';
+                    return `${this.staticBaseUrl}/brands/${this.selectedBrand}/images/placeholders/${path}`;
+                },
+
+                formatPlaceholderName(name) {
+                    return name.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+                },
+
+                async uploadPlaceholder(category, name, event) {
+                    const file = event.target.files[0];
+                    if (!file) return;
+
+                    const formData = new FormData();
+                    formData.append('file', file);
+
+                    try {
+                        const response = await fetch(`/admin/api/brands/${this.selectedBrand}/placeholder/${category}/${name}`, {
+                            method: 'POST',
+                            body: formData
+                        });
+
+                        if (response.ok) {
+                            await this.loadBrand();
+                            this.showToast('Placeholder subido correctamente', 'success');
+                        } else {
+                            throw new Error('Upload failed');
+                        }
+                    } catch (error) {
+                        this.showToast('Error subiendo placeholder', 'error');
+                    }
+                },
+
+                showFontUpload(type) {
+                    this.fontUpload.type = type;
+                    this.fontUpload.name = this.brandConfig?.fonts?.[type]?.name || '';
+                    this.showFontModal = true;
+                },
+
+                async uploadFont() {
+                    if (!this.fontUpload.file || !this.fontUpload.name) {
+                        this.showToast('Selecciona un archivo y nombre', 'error');
+                        return;
+                    }
+
+                    this.uploadingFont = true;
+                    const formData = new FormData();
+                    formData.append('file', this.fontUpload.file);
+                    formData.append('font_type', this.fontUpload.type);
+                    formData.append('font_name', this.fontUpload.name);
+                    formData.append('weight', this.fontUpload.weight);
+                    formData.append('style', this.fontUpload.style);
+
+                    try {
+                        const response = await fetch(`/admin/api/brands/${this.selectedBrand}/font`, {
+                            method: 'POST',
+                            body: formData
+                        });
+
+                        if (response.ok) {
+                            await this.loadBrand();
+                            this.showFontModal = false;
+                            this.fontUpload = { type: 'primary', file: null, name: '', weight: '400', style: 'normal' };
+                            this.showToast('Fuente subida y convertida correctamente', 'success');
+                        } else {
+                            const error = await response.json();
+                            throw new Error(error.detail || 'Upload failed');
+                        }
+                    } catch (error) {
+                        this.showToast(error.message || 'Error subiendo fuente', 'error');
+                    } finally {
+                        this.uploadingFont = false;
+                    }
+                },
+
+                async deleteFont(fontType, weight, style) {
+                    if (!confirm('¿Eliminar esta variante de fuente?')) return;
+
+                    try {
+                        const response = await fetch(`/admin/api/brands/${this.selectedBrand}/font/${fontType}/${weight}/${style}`, {
+                            method: 'DELETE'
+                        });
+
+                        if (response.ok) {
+                            await this.loadBrand();
+                            this.showToast('Variante eliminada', 'success');
+                        } else {
+                            throw new Error('Delete failed');
+                        }
+                    } catch (error) {
+                        this.showToast('Error eliminando variante', 'error');
+                    }
+                },
+
+                async saveFontName(type) {
+                    await this.saveBrandConfig();
+                },
+
+                async saveFontFallback() {
+                    await this.saveBrandConfig();
+                },
+
+                async saveBrandConfig() {
+                    try {
+                        const response = await fetch(`/admin/api/brands/${this.selectedBrand}`, {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(this.brandConfig)
+                        });
+
+                        if (response.ok) {
+                            this.showToast('Configuración guardada', 'success');
+                        } else {
+                            throw new Error('Save failed');
+                        }
+                    } catch (error) {
+                        this.showToast('Error guardando configuración', 'error');
+                    }
+                },
+
+                async createBrand() {
+                    if (!this.newBrand.id || !this.newBrand.name) {
+                        this.showToast('ID y nombre son requeridos', 'error');
+                        return;
+                    }
+
+                    try {
+                        const response = await fetch('/admin/api/brands', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                brand_id: this.newBrand.id.toLowerCase().replace(/\s+/g, '-'),
+                                customer_name: this.newBrand.name,
+                                copy_from: this.newBrand.copyFrom || null
+                            })
+                        });
+
+                        if (response.ok) {
+                            const data = await response.json();
+                            this.brands.push(data.id);
+                            this.selectedBrand = data.id;
+                            await this.loadBrand();
+                            this.showNewBrandModal = false;
+                            this.newBrand = { id: '', name: '', copyFrom: '' };
+                            this.showToast('Brand creado correctamente', 'success');
+                        } else {
+                            const error = await response.json();
+                            throw new Error(error.detail || 'Create failed');
+                        }
+                    } catch (error) {
+                        this.showToast(error.message || 'Error creando brand', 'error');
+                    }
+                },
+
+                showToast(message, type = 'success') {
+                    this.toast = { show: true, message, type };
+                    setTimeout(() => {
+                        this.toast.show = false;
+                    }, 3000);
+                }
+            };
+        }
+    </script>
+</body>
+</html>

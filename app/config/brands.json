@@ -30,17 +30,41 @@
       "primary": {
         "name": "Mapfre Sans",
         "variants": [
-          { "file": "MapfreSans-Light.woff2", "weight": 300, "style": "normal" },
-          { "file": "MapfreSans-Regular.woff2", "weight": 400, "style": "normal" },
-          { "file": "MapfreSans-Bold.woff2", "weight": 700, "style": "normal" }
+          {
+            "file": "MapfreSans-Light.woff2",
+            "weight": 300,
+            "style": "normal"
+          },
+          {
+            "file": "MapfreSans-Regular.woff2",
+            "weight": 400,
+            "style": "normal"
+          },
+          {
+            "file": "MapfreSans-Bold.woff2",
+            "weight": 700,
+            "style": "normal"
+          }
         ]
       },
       "secondary": {
         "name": "Mapfre Text",
         "variants": [
-          { "file": "MapfreText-Regular.woff2", "weight": 400, "style": "normal" },
-          { "file": "MapfreText-Italic.woff2", "weight": 400, "style": "italic" },
-          { "file": "MapfreText-Bold.woff2", "weight": 700, "style": "normal" }
+          {
+            "file": "MapfreText-Regular.woff2",
+            "weight": 400,
+            "style": "normal"
+          },
+          {
+            "file": "MapfreText-Italic.woff2",
+            "weight": 400,
+            "style": "italic"
+          },
+          {
+            "file": "MapfreText-Bold.woff2",
+            "weight": 700,
+            "style": "normal"
+          }
         ]
       },
       "fallback": "Arial, sans-serif"
@@ -84,8 +108,8 @@
   "santander": {
     "customerName": "santander",
     "colors": {
-      "primary": "#FF0000",
-      "secondary": "#FFFF00",
+      "primary": "#6600ff",
+      "secondary": "#ff0000",
       "link": "#00FF00",
       "background": "#00FFFF",
       "backgroundSecondary": "#0000FF",
@@ -112,11 +136,31 @@
       "primary": {
         "name": "Roboto",
         "variants": [
-          { "file": "Roboto-Light.woff2", "weight": 300, "style": "normal" },
-          { "file": "Roboto-Regular.woff2", "weight": 400, "style": "normal" },
-          { "file": "Roboto-Medium.woff2", "weight": 500, "style": "normal" },
-          { "file": "Roboto-Bold.woff2", "weight": 700, "style": "normal" },
-          { "file": "Roboto-Italic.woff2", "weight": 400, "style": "italic" }
+          {
+            "file": "Roboto-Light.woff2",
+            "weight": 300,
+            "style": "normal"
+          },
+          {
+            "file": "Roboto-Regular.woff2",
+            "weight": 400,
+            "style": "normal"
+          },
+          {
+            "file": "Roboto-Medium.woff2",
+            "weight": 500,
+            "style": "normal"
+          },
+          {
+            "file": "Roboto-Bold.woff2",
+            "weight": 700,
+            "style": "normal"
+          },
+          {
+            "file": "Roboto-Italic.woff2",
+            "weight": 400,
+            "style": "italic"
+          }
         ]
       },
       "fallback": "Arial, sans-serif"
