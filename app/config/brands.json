@@ -51,14 +51,14 @@
     },
     "placeholders": {
       "car": {
-        "front": "car/car-illustration-front.jpg",
-        "frontRight": "car/car-illustration-front-right.jpg",
-        "right": "car/car-illustration-right.jpeg",
-        "rearRight": "car/car-illustration-rear-right.jpeg",
-        "rear": "car/car-illustration-rear.jpeg",
-        "rearLeft": "car/car-illustration-rear-left.jpeg",
-        "left": "car/car-illustration-left.webp",
-        "frontLeft": "car/car-illustration-front-left.avif"
+        "front": "car/car-illustration-front.png",
+        "frontRight": "car/car-illustration-front-right.png",
+        "right": "car/car-illustration-right.png",
+        "rearRight": "car/car-illustration-rear-right.png",
+        "rear": "car/car-illustration-rear.png",
+        "rearLeft": "car/car-illustration-rear-left.png",
+        "left": "car/car-illustration-left.png",
+        "frontLeft": "car/car-illustration-front-left.png"
       },
       "moto": {
         "front": "moto/moto-illustration-front.png",
@@ -67,17 +67,17 @@
         "left": "moto/moto-illustration-left.png"
       },
       "odometer": {
-        "mileage": "odometer/odometer-illustration.jpeg"
+        "mileage": "odometer/odometer-illustration.png"
       },
       "documentation": {
-        "dniFront": "documentation/dni-illustration-anverso.jpeg",
-        "dniBack": "documentation/dni-illustration-reverso.jpeg",
-        "licenseFront": "documentation/license-illustration-anverso.jpeg",
-        "licenseBack": "documentation/license-illustration-reverso.jpeg",
-        "dataSheetFront": "documentation/datasheet-illustration-anverso.jpeg",
-        "dataSheetBack": "documentation/datasheet-illustration-reverso.jpeg",
-        "circulationFront": "documentation/circulation-illustration-anverso.jpeg",
-        "circulationBack": "documentation/circulation-illustration-reverso.jpeg"
+        "dniFront": "documentation/dni-illustration-anverso.png",
+        "dniBack": "documentation/dni-illustration-reverso.png",
+        "licenseFront": "documentation/license-illustration-anverso.png",
+        "licenseBack": "documentation/license-illustration-reverso.png",
+        "dataSheetFront": "documentation/datasheet-illustration-anverso.png",
+        "dataSheetBack": "documentation/datasheet-illustration-reverso.png",
+        "circulationFront": "documentation/circulation-illustration-anverso.png",
+        "circulationBack": "documentation/circulation-illustration-reverso.png"
       }
     }
   },
@@ -127,14 +127,14 @@
     },
     "placeholders": {
       "car": {
-        "front": "car/car-illustration-front.png",
-        "frontRight": "car/car-illustration-front-right.png",
-        "right": "car/car-illustration-right.png",
-        "rearRight": "car/car-illustration-rear-right.png",
-        "rear": "car/car-illustration-rear.png",
-        "rearLeft": "car/car-illustration-rear-left.png",
-        "left": "car/car-illustration-left.png",
-        "frontLeft": "car/car-illustration-front-left.png"
+        "front": "car/car-illustration-front.jpg",
+        "frontRight": "car/car-illustration-front-right.jpg",
+        "right": "car/car-illustration-right.jpeg",
+        "rearRight": "car/car-illustration-rear-right.jpeg",
+        "rear": "car/car-illustration-rear.jpeg",
+        "rearLeft": "car/car-illustration-rear-left.jpeg",
+        "left": "car/car-illustration-left.webp",
+        "frontLeft": "car/car-illustration-front-left.avif"
       },
       "moto": {
         "front": "moto/moto-illustration-front.png",
@@ -143,16 +143,16 @@
         "left": "moto/moto-illustration-left.png"
       },
       "odometer": {
-        "mileage": "odometer/odometer-illustration.png"
+        "mileage": "odometer/odometer-illustration.jpeg"
       },
       "documentation": {
-        "dniFront": "documentation/dni-illustration-anverso.png",
-        "dniBack": "documentation/dni-illustration-reverso.png",
-        "licenseFront": "documentation/license-illustration-anverso.png",
-        "licenseBack": "documentation/license-illustration-reverso.png",
+        "dniFront": "documentation/dni-illustration-anverso.jpeg",
+        "dniBack": "documentation/dni-illustration-reverso.jpeg",
+        "licenseFront": "documentation/license-illustration-anverso.jpeg",
+        "licenseBack": "documentation/license-illustration-reverso.jpeg",
         "dataSheetFront": "documentation/datasheet-illustration-anverso.png",
         "dataSheetBack": "documentation/datasheet-illustration-reverso.png",
-        "circulationFront": "documentation/circulation-illustration-anverso.png",
+        "circulationFront": "documentation/circulation-illustration-anverso.jpeg",
         "circulationBack": "documentation/circulation-illustration-reverso.png"
       }
     }
