@@ -5,11 +5,9 @@
       "primary": "#D81E05",
       "secondary": "#1A1A1A",
       "link": "#D81E05",
-      "background": "#f8f9fa",
-      "backgroundSecondary": "#F5F5F5",
+      "background": "#F5F5F5",
       "headerBackground": "#ffffff",
-      "navBar": "#D81E05",
-      "navBarSecondary": "#B30000",
+      "navBar": "#ffffff",
       "text": "#2d373d",
       "textSecondary": "#666666",
       "overlay": "rgba(0, 0, 0, 0.4)",
@@ -21,9 +19,9 @@
       "buttonNext": "#D81E05",
       "buttonNextDisabled": "#d81e059d",
       "buttonNextText": "#FFFFFF",
-      "buttonBack": "transparent",
+      "buttonBack": "#5e6cd9",
       "buttonBackDisabled": "#ea7669",
-      "buttonBackText": "#D81E05",
+      "buttonBackText": "#4663cb",
       "buttonLoginDisabled": "#acacac",
       "skeleton": "#E0E0E0",
       "errorModalBackground": "#fdf2f2"
@@ -148,7 +146,7 @@
         "left": "moto/moto-illustration-left.png"
       },
       "odometer": {
-        "mileage": "odometer/odometer-illustration.png"
+        "mileage": "odometer/odometer-illustration-mileage.png"
       },
       "documentation": {
         "dniFront": "documentation/dni-illustration-anverso.png",
@@ -169,10 +167,8 @@
       "secondary": "#ff0000",
       "link": "#00FF00",
       "background": "#00FFFF",
-      "backgroundSecondary": "#0000FF",
       "headerBackground": "#FF00FF",
       "navBar": "#800000",
-      "navBarSecondary": "#808000",
       "text": "#008000",
       "textSecondary": "#008080",
       "overlay": "rgba(128, 0, 128, 0.5)",

@@ -38,10 +38,8 @@ class ColorsUpdate(BaseModel):
     secondary: Optional[str] = None
     link: Optional[str] = None
     background: Optional[str] = None
-    backgroundSecondary: Optional[str] = None
     headerBackground: Optional[str] = None
     navBar: Optional[str] = None
-    navBarSecondary: Optional[str] = None
     text: Optional[str] = None
     textSecondary: Optional[str] = None
     overlay: Optional[str] = None
@@ -203,10 +201,8 @@ async def create_brand(brand_data: BrandCreate):
                 "secondary": "#333333",
                 "link": "#0066CC",
                 "background": "#FFFFFF",
-                "backgroundSecondary": "#F5F5F5",
                 "headerBackground": "#000000",
                 "navBar": "#000000",
-                "navBarSecondary": "#333333",
                 "text": "#1A1A1A",
                 "textSecondary": "#666666",
                 "overlay": "rgba(0, 0, 0, 0.4)",

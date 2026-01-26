@@ -35,10 +35,8 @@ class Colors(BaseModel):
     secondary: str
     link: str
     background: str
-    backgroundSecondary: str
     headerBackground: str
     navBar: str
-    navBarSecondary: str
     text: str
     textSecondary: str
     overlay: str
