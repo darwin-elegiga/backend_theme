@@ -166,8 +166,8 @@
       "fallback": "Arial, sans-serif"
     },
     "logos": {
-      "header": "placeholders/logo.svg",
-      "favicon": "placeholders/favicon.ico"
+      "header": "logo.svg",
+      "favicon": "favicon.ico"
     },
     "placeholders": {
       "car": {
