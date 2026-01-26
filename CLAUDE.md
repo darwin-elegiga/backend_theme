@@ -76,7 +76,6 @@ GET /api/theme/{brand_id}
       "navBarSecondary": "#B30000",
       "text": "#1A1A1A",
       "textSecondary": "#666666",
-      "border": "#E0E0E0",
       "overlay": "rgba(0, 0, 0, 0.4)",
       "error": "#D32F2F",
       "errorBackground": "#FFEBEE",

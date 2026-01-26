@@ -32,7 +32,6 @@ class Fonts(BaseModel):
 class Colors(BaseModel):
     """Paleta de colores del tema."""
     primary: str
-    primaryDisabled: str
     secondary: str
     link: str
     background: str
@@ -42,7 +41,6 @@ class Colors(BaseModel):
     navBarSecondary: str
     text: str
     textSecondary: str
-    border: str
     overlay: str
     error: str
     errorBackground: str
@@ -50,9 +48,12 @@ class Colors(BaseModel):
     success: str
     warning: str
     buttonNext: str
+    buttonNextDisabled: str
     buttonNextText: str
     buttonBack: str
+    buttonBackDisabled: str
     buttonBackText: str
+    skeleton: str
 
 
 class Logos(BaseModel):

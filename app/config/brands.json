@@ -3,7 +3,6 @@
     "customerName": "mapfre",
     "colors": {
       "primary": "#D81E05",
-      "primaryDisabled": "#d81e059d",
       "secondary": "#1A1A1A",
       "link": "#D81E05",
       "background": "#FFFFFF",
@@ -13,7 +12,6 @@
       "navBarSecondary": "#B30000",
       "text": "#1A1A1A",
       "textSecondary": "#666666",
-      "border": "#E0E0E0",
       "overlay": "rgba(0, 0, 0, 0.4)",
       "error": "#D32F2F",
       "errorBackground": "#FFEBEE",
@@ -21,9 +19,12 @@
       "success": "#2E7D32",
       "warning": "#F57C00",
       "buttonNext": "#D81E05",
+      "buttonNextDisabled": "#d81e059d",
       "buttonNextText": "#FFFFFF",
       "buttonBack": "transparent",
-      "buttonBackText": "#D81E05"
+      "buttonBackDisabled": "#E0E0E0",
+      "buttonBackText": "#D81E05",
+      "skeleton": "#E0E0E0"
     },
     "fonts": {
       "primary": {
@@ -50,14 +51,14 @@
     },
     "placeholders": {
       "car": {
-        "front": "car/car-illustration-front.png",
-        "frontRight": "car/car-illustration-front-right.png",
-        "right": "car/car-illustration-right.png",
-        "rearRight": "car/car-illustration-rear-right.png",
-        "rear": "car/car-illustration-rear.png",
-        "rearLeft": "car/car-illustration-rear-left.png",
-        "left": "car/car-illustration-left.png",
-        "frontLeft": "car/car-illustration-front-left.png"
+        "front": "car/car-illustration-front.jpg",
+        "frontRight": "car/car-illustration-front-right.jpg",
+        "right": "car/car-illustration-right.jpeg",
+        "rearRight": "car/car-illustration-rear-right.jpeg",
+        "rear": "car/car-illustration-rear.jpeg",
+        "rearLeft": "car/car-illustration-rear-left.jpeg",
+        "left": "car/car-illustration-left.webp",
+        "frontLeft": "car/car-illustration-front-left.avif"
       },
       "moto": {
         "front": "moto/moto-illustration-front.png",
@@ -66,45 +67,46 @@
         "left": "moto/moto-illustration-left.png"
       },
       "odometer": {
-        "mileage": "odometer/odometer-illustration.png"
+        "mileage": "odometer/odometer-illustration.jpeg"
       },
       "documentation": {
-        "dniFront": "documentation/dni-illustration-anverso.png",
-        "dniBack": "documentation/dni-illustration-reverso.png",
-        "licenseFront": "documentation/license-illustration-anverso.png",
-        "licenseBack": "documentation/license-illustration-reverso.png",
-        "dataSheetFront": "documentation/datasheet-illustration-anverso.png",
-        "dataSheetBack": "documentation/datasheet-illustration-reverso.png",
-        "circulationFront": "documentation/circulation-illustration-anverso.png",
-        "circulationBack": "documentation/circulation-illustration-reverso.png"
+        "dniFront": "documentation/dni-illustration-anverso.jpeg",
+        "dniBack": "documentation/dni-illustration-reverso.jpeg",
+        "licenseFront": "documentation/license-illustration-anverso.jpeg",
+        "licenseBack": "documentation/license-illustration-reverso.jpeg",
+        "dataSheetFront": "documentation/datasheet-illustration-anverso.jpeg",
+        "dataSheetBack": "documentation/datasheet-illustration-reverso.jpeg",
+        "circulationFront": "documentation/circulation-illustration-anverso.jpeg",
+        "circulationBack": "documentation/circulation-illustration-reverso.jpeg"
       }
     }
   },
   "santander": {
     "customerName": "santander",
     "colors": {
-      "primary": "#1565C0",
-      "primaryDisabled": "#1565C09d",
-      "secondary": "#0D47A1",
-      "link": "#2196F3",
-      "background": "#FFFFFF",
-      "backgroundSecondary": "#E3F2FD",
-      "headerBackground": "#1565C0",
-      "navBar": "#1565C0",
-      "navBarSecondary": "#0D47A1",
-      "text": "#0D47A1",
-      "textSecondary": "#1976D2",
-      "border": "#90CAF9",
-      "overlay": "rgba(21, 101, 192, 0.5)",
-      "error": "#1976D2",
-      "errorBackground": "#BBDEFB",
-      "errorText": "#0D47A1",
-      "success": "#1565C0",
-      "warning": "#42A5F5",
-      "buttonNext": "#1565C0",
-      "buttonNextText": "#FFFFFF",
-      "buttonBack": "#E3F2FD",
-      "buttonBackText": "#1565C0"
+      "primary": "#FF0000",
+      "secondary": "#FFFF00",
+      "link": "#00FF00",
+      "background": "#00FFFF",
+      "backgroundSecondary": "#0000FF",
+      "headerBackground": "#FF00FF",
+      "navBar": "#800000",
+      "navBarSecondary": "#808000",
+      "text": "#008000",
+      "textSecondary": "#008080",
+      "overlay": "rgba(128, 0, 128, 0.5)",
+      "error": "#FF4500",
+      "errorBackground": "#FFD700",
+      "errorText": "#32CD32",
+      "success": "#4169E1",
+      "warning": "#DC143C",
+      "buttonNext": "#9400D3",
+      "buttonNextDisabled": "#FF6600",
+      "buttonNextText": "#00CED1",
+      "buttonBack": "#FF1493",
+      "buttonBackDisabled": "#A9A9A9",
+      "buttonBackText": "#1E90FF",
+      "skeleton": "#BA55D3"
     },
     "fonts": {
       "primary": {
