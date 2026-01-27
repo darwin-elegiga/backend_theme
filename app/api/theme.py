@@ -31,7 +31,7 @@ from app.services.code_service import get_code_service
 router = APIRouter(prefix="/api", tags=["theme"])
 
 
-def resolve_to_brand_id(code_or_brand: str) -> str:
+async def resolve_to_brand_id(code_or_brand: str) -> str:
     """
     Resuelve un código URL o brand_id a un brand_id válido.
 
@@ -51,8 +51,8 @@ def resolve_to_brand_id(code_or_brand: str) -> str:
     brand_service = get_brand_service()
 
     # Primero intentar como código URL
-    if code_service.code_exists(code_or_brand):
-        return code_service.get_brand_id_by_code(code_or_brand)
+    if await code_service.code_exists(code_or_brand):
+        return await code_service.get_brand_id_by_code(code_or_brand)
 
     # Si no es código, verificar si es un brand_id válido
     if brand_service.brand_exists(code_or_brand):
@@ -88,7 +88,7 @@ async def get_theme(url_code: str) -> ThemeResponse:
 
     # Resolver código/brand a brand_id
     try:
-        brand_id = resolve_to_brand_id(url_code)
+        brand_id = await resolve_to_brand_id(url_code)
         config = brand_service.get_brand_config(brand_id)
     except BrandNotFoundError:
         raise HTTPException(
@@ -164,7 +164,7 @@ async def get_theme_colors(url_code: str) -> dict:
     brand_service = get_brand_service()
 
     try:
-        brand_id = resolve_to_brand_id(url_code)
+        brand_id = await resolve_to_brand_id(url_code)
         config = brand_service.get_brand_config(brand_id)
     except BrandNotFoundError:
         raise HTTPException(
@@ -204,7 +204,7 @@ async def get_fonts_css(url_code: str) -> Response:
     font_service = get_font_service()
 
     try:
-        brand_id = resolve_to_brand_id(url_code)
+        brand_id = await resolve_to_brand_id(url_code)
         css_content = font_service.generate_fonts_css(brand_id)
     except BrandNotFoundError:
         raise HTTPException(
